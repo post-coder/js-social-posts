@@ -157,9 +157,11 @@ posts.forEach(function (currentPost) {
             // aggiungo la classe al pulsante
             currentLikeButton.classList.add("like-button--liked");
 
+            
             // aumentare il contatore relativo
             currentPost.likes++;
             // console.log(currentPost.likes);
+
 
             // mostro il nuovo numero di like in pagina nell'elemento corretto
             const currentLikeCounter = document.querySelector(`#like-counter-${currentPost.id}`);
@@ -170,11 +172,12 @@ posts.forEach(function (currentPost) {
             // se abbiamo già cliccato dobbiamo decrementare il contatore 
             // e cambiare il colore del bottone.
 
+
             // rimuovo l'id del post dall'array dei post piaciuti
 
             // capire quale sia l'indice che mi indica l'id del post che ho appena cliccato
             const indexOfLikedPost = likedPosts.indexOf(currentPost.id);
-            
+
             // rimuovo l'elemento seleizonato dall'array dei like
             likedPosts.splice(indexOfLikedPost, 1);
 
@@ -182,8 +185,10 @@ posts.forEach(function (currentPost) {
             // rimuovo la classe che lo stilizza come cliccato
             currentLikeButton.classList.remove("like-button--liked");
 
+
             // diminuire il contatore relativo
             currentPost.likes--;
+
 
             // mostro il nuovo numero di like in pagina nell'elemento corretto
             const currentLikeCounter = document.querySelector(`#like-counter-${currentPost.id}`);
@@ -208,16 +213,21 @@ function getAuthorImage(currentPost) {
 
         // salvo il nome dell'autore
         const authorName = currentPost.author.name;
+        // divido la stringa con Nome Cognome in un array con le due parole
         const authorNameWords = authorName.split(" ");
+
+        // mi salvo una stringa vuota dove scriverò le iniziali
         let initials = "";
+        // per ogni parola aggiungo alla stringa le iniziali
         authorNameWords.forEach(currentWord => {
 
             initials += currentWord[0];
 
         })
 
-        console.log(initials);
+        // console.log(initials);
 
+        // le restituisco in pagina, dove ho chiamato la mia funzione
         return `
             <div class="profile-pic-default">
                 <span>
