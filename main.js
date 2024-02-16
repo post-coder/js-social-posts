@@ -18,7 +18,7 @@ const posts = [
         "media": "https://unsplash.it/600/300?image=171",
         "author": {
             "name": "Phil Mangione",
-            "image": null
+            "image": "https://unsplash.it/300/300?image=15"
         },
         "likes": 80,
         "created": "2021-06-25"
@@ -159,11 +159,36 @@ posts.forEach(function (currentPost) {
 
             // aumentare il contatore relativo
             currentPost.likes++;
-            console.log(currentPost.likes);
+            // console.log(currentPost.likes);
 
             // mostro il nuovo numero di like in pagina nell'elemento corretto
             const currentLikeCounter = document.querySelector(`#like-counter-${currentPost.id}`);
             currentLikeCounter.innerText = currentPost.likes;
+
+        } else {
+            // Al click su un pulsante "Mi Piace" di un post, 
+            // se abbiamo già cliccato dobbiamo decrementare il contatore 
+            // e cambiare il colore del bottone.
+
+            // rimuovo l'id del post dall'array dei post piaciuti
+
+            // capire quale sia l'indice che mi indica l'id del post che ho appena cliccato
+            const indexOfLikedPost = likedPosts.indexOf(currentPost.id);
+            
+            // rimuovo l'elemento seleizonato dall'array dei like
+            likedPosts.splice(indexOfLikedPost, 1);
+
+
+            // rimuovo la classe che lo stilizza come cliccato
+            currentLikeButton.classList.remove("like-button--liked");
+
+            // diminuire il contatore relativo
+            currentPost.likes--;
+
+            // mostro il nuovo numero di like in pagina nell'elemento corretto
+            const currentLikeCounter = document.querySelector(`#like-counter-${currentPost.id}`);
+            currentLikeCounter.innerText = currentPost.likes;
+            
         }
 
         console.log('like:', likedPosts);
