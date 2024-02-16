@@ -81,7 +81,7 @@ const containerElement = document.querySelector("#container");
 
 posts.forEach(function (currentPost) {
 
-    // console.log(currentPost);
+    console.log(currentPost);
     // creo un elemento html vuoto
     const newPost = document.createElement("div");
 
@@ -134,12 +134,36 @@ posts.forEach(function (currentPost) {
     const currentLikeButton = document.querySelector(`a[data-postid="${currentPost.id}"]`);
     
     console.log(currentLikeButton);
+
     currentLikeButton.addEventListener("click", (e) => {
 
+        // blocca il comportamento di default del click
+        // essendo un tag <a> provava a eseguire il link
         e.preventDefault();
 
-        console.log("click");
+        
+        // controllare se non abbiamo già messo like al post
+        if( ! likedPosts.includes(currentPost.id)) {
+
+            // inserisco l'id del post nel mio array dove mi memorizzo i post piaciuti
+            likedPosts.push(currentPost.id);
+            
+            // currentLikeButton: pulsante appena cliccato
+            // aggiungo la classe al pulsante
+            currentLikeButton.classList.add("like-button--liked");
+
+            // aumentare il contatore relativo
+            currentPost.likes++;
+            console.log(currentPost.likes);
+
+            // mostro il nuovo numero di like in pagina nell'elemento corretto
+            const currentLikeCounter = document.querySelector(`#like-counter-${currentPost.id}`);
+            currentLikeCounter.innerText = currentPost.likes;
+        }
+
+        console.log('like:', likedPosts);
     })
     
 })
+
 
