@@ -18,7 +18,7 @@ const posts = [
         "media": "https://unsplash.it/600/300?image=171",
         "author": {
             "name": "Phil Mangione",
-            "image": "https://unsplash.it/300/300?image=15"
+            "image": null
         },
         "likes": 80,
         "created": "2021-06-25"
@@ -51,7 +51,7 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=24",
         "author": {
             "name": "Luca Formicola",
-            "image": ""
+            "image": null
         },
         "likes": 56,
         "created": "2021-04-03"
@@ -81,20 +81,25 @@ const containerElement = document.querySelector("#container");
 
 posts.forEach(function (currentPost) {
 
-    console.log(currentPost);
+    // console.log(currentPost);
     // creo un elemento html vuoto
     const newPost = document.createElement("div");
+
+    // gestisco la data
+    const oldDate = new Date(currentPost.created);
+    const newDate = oldDate.toLocaleDateString("it-IT");
+
 
     // ci scrivo dentro i contenuti che mi servono
     newPost.innerHTML = `
         <div class="post__header">
             <div class="post-meta">                    
                 <div class="post-meta__icon">
-                    <img class="profile-pic" src="${currentPost.author.image}" alt="Phil Mangione">                    
+                    ${getAuthorImage(currentPost)}             
                 </div>
                 <div class="post-meta__data">
                     <div class="post-meta__author">${currentPost.author.name}</div>
-                    <div class="post-meta__time">${currentPost.created}</div>
+                    <div class="post-meta__time">${newDate}</div>
                 </div>                    
             </div>
         </div>
@@ -133,7 +138,7 @@ posts.forEach(function (currentPost) {
     // diverso per il parametro data-postid (come si vede dall'istruzione precedente lì dentro ci ho scritto l'id del post, che è diverso per ognuno)
     const currentLikeButton = document.querySelector(`a[data-postid="${currentPost.id}"]`);
     
-    console.log(currentLikeButton);
+    // console.log(currentLikeButton);
 
     currentLikeButton.addEventListener("click", (e) => {
 
@@ -167,3 +172,35 @@ posts.forEach(function (currentPost) {
 })
 
 
+
+function getAuthorImage(currentPost) {
+
+    if(currentPost.author.image != null) {
+        
+        return `<img class="profile-pic" src="${currentPost.author.image}" alt="Phil Mangione">`;
+
+    } else {
+
+        // salvo il nome dell'autore
+        const authorName = currentPost.author.name;
+        const authorNameWords = authorName.split(" ");
+        let initials = "";
+        authorNameWords.forEach(currentWord => {
+
+            initials += currentWord[0];
+
+        })
+
+        console.log(initials);
+
+        return `
+            <div class="profile-pic-default">
+                <span>
+                    ${initials}
+                </span>
+            </div>
+        `;
+
+    }
+    
+}
